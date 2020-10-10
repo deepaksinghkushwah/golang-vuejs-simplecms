@@ -1,0 +1,110 @@
+<template>
+  <div id="nav">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <router-link class="navbar-brand" to="/">CMS</router-link>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <router-link class="nav-link" to="/">Home</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/about">About</router-link>
+            </li>
+            <Categories />
+          </ul>
+        </div>
+      </nav>
+
+      <div class="loadingContainer" v-if="loading">
+        <div class="loadingItem">Loading....</div>
+      </div>
+
+      <router-view />
+    </div>
+  </div>
+</template>
+<script>
+// @ is an alias to /src
+import Categories from "@/components/Categories.vue";
+
+export default {
+  name: "Home",
+  components: {
+    Categories,
+  },
+  computed: {
+    loading() {
+      return this.$store.state.isLoading;
+    },
+  },
+  mounted() {
+    this.$store.dispatch("getCategories");
+  },
+};
+</script>
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: left;
+  color: #2c3e50;
+  min-height: 500px;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+.loadingContainer {
+  height: 500px;
+  padding: 0;
+  margin: 0;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.loadingItem {
+  background-color: tomato;
+  padding: 5px;
+  width: 200px;
+  height: 25px;
+  margin: 10px;
+  top: 50%;
+  line-height: 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 2em;
+  text-align: center;
+  vertical-align: middle;
+}
+</style>
