@@ -18,6 +18,7 @@ import (
 	//_ "github.com/go-sql-driver/mysql"
 
 	"github.com/joho/godotenv"
+	"golang.org/x/crypto/bcrypt"
 	"time"
 )
 
@@ -55,8 +56,8 @@ func checkError(err error) {
 func RunMigration() {
 	db := GetDB()
 
-	//db.AutoMigrate(&models.Role{})
-	//db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.Role{})
+	db.AutoMigrate(&models.User{})
 	db.AutoMigrate(&models.Category{})
 	db.AutoMigrate(&models.Page{})
 
@@ -91,7 +92,7 @@ func RunMigration() {
 		}
 	}
 
-	/*var role models.Role
+	var role models.Role
 	db.First(&role)
 	if role.ID <= 0 {
 		role1 := models.Role{Title: "Admin"}
@@ -100,9 +101,21 @@ func RunMigration() {
 		role2 := models.Role{Title: "Registered"}
 		db.Create(&role2)
 		hashPassword, _ := HashPassword("123456")
-		admin := models.User{Email: "admin@localhost.com", Username: "admin", Password: hashPassword, FirstName: "Super", LastName: "Admin", RoleID: 1}
+		admin := models.User{Email: "admin@localhost.com", Password: hashPassword, FirstName: "Super", LastName: "Admin", RoleID: 1}
 		db.Create(&admin)
-	}*/
+	}
+}
+
+//HashPassword generate hash password
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
+}
+
+//CheckPasswordHash check hashed password with string password
+func CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }
 
 // Sleep for a time
