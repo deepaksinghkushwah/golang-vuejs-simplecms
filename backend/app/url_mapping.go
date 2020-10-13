@@ -39,11 +39,7 @@ func mapUrls() {
 		sec := v1.Group("/member")
 		sec.Use(middleware.AuthorizeJWT)
 		{
-			sec.GET("/create-page", func(c *gin.Context) {
-				c.JSON(http.StatusOK, gin.H{
-					"msg": "You are good to go",
-				})
-			})
+			sec.POST("/create-page", controllers.CreatePage)
 		}
 
 	}

@@ -3,10 +3,9 @@ package middleware
 import (
 	"cms/backend/service"
 	"fmt"
-	"net/http"
-
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func respondWithError(c *gin.Context, code int, message interface{}) {
@@ -15,9 +14,9 @@ func respondWithError(c *gin.Context, code int, message interface{}) {
 
 // AuthorizeJWT auth token
 func AuthorizeJWT(c *gin.Context) {
+	c.Header("Access-Control-Allow-Methods", "OPTIONS, GET, POST")
 	const bearerSchema = "Bearer"
 	authHeader := c.GetHeader("Authorization")
-	fmt.Println(authHeader)
 	tokenString := authHeader[len(bearerSchema):]
 	token, err := service.JWTAuthService().ValidateToken(tokenString)
 	if token.Valid {

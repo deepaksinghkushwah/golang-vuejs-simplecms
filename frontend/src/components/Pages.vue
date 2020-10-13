@@ -20,7 +20,7 @@ export default {
   props: ["alias"],
   computed: {
     pageList() {        
-      return this.$store.state.pages;
+      return this.$store.state.page.pages;
     },
   },
 };

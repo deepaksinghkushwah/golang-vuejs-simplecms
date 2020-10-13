@@ -24,6 +24,20 @@
               <router-link class="nav-link" to="/about">About</router-link>
             </li>
             <Categories />
+            
+          </ul>
+          <ul class="navbar-nav">
+            <li v-if="$store.getters.isAuthenticated == false" class="nav-item">
+              <router-link class="nav-link" to="/login">Login</router-link>
+            </li>
+
+            <li v-if="$store.getters.isAuthenticated==true" class="nav-item">
+               <router-link class="nav-link" to="/page-create">Create Page</router-link>
+            </li>
+            <li v-if="$store.getters.isAuthenticated==true" class="nav-item">
+              <a class="nav-link" href="javascript:void(0)" @click.prevent="logout">Logout</a>
+            </li>
+            
           </ul>
         </div>
       </nav>
@@ -39,18 +53,30 @@
 <script>
 // @ is an alias to /src
 import Categories from "@/components/Categories.vue";
+import {AUTH_LOGOUT} from "@/store/actions/auth.js";
 
 export default {
   name: "Home",
   components: {
     Categories,
   },
+  methods: {
+    logout(){
+      this.$store.dispatch(AUTH_LOGOUT).then(() => {
+        this.$router.push("/login");
+      });
+    }
+  },
   computed: {
     loading() {
       return this.$store.state.isLoading;
     },
+    token(){
+      return this.$store.state.auth.token;
+    }
   },
-  mounted() {
+  mounted() {   
+    console.log("Authenticated: ",this.$store.getters.isAuthenticated); 
     this.$store.dispatch("getCategories");
   },
 };
@@ -106,5 +132,10 @@ export default {
   font-size: 2em;
   text-align: center;
   vertical-align: middle;
+}
+
+.nav-item{
+  display: inline;
+  padding-left: 10px;
 }
 </style>

@@ -28,7 +28,18 @@ const routes = [
     path: '/pages/:category/:page',
     name: "Page",
     component: () => import("@/components/Page.vue")
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import("@/components/Login.vue")
+  },
+  {
+    path: '/page-create',
+    name: 'PageCreate',
+    component: () => import("@/components/PageCreate.vue")
   }
+  
 ]
 
 const router = new VueRouter({

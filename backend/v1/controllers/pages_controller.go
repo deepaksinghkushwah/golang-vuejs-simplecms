@@ -88,3 +88,31 @@ func GetPage(c *gin.Context) {
 	}
 
 }
+
+// CreatePage create new page
+func CreatePage(c *gin.Context) {
+
+	var page models.Page
+	err := c.Bind(&page)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println("Received data: ", page)
+	db := general.GetDB()
+	defer general.CloseDB(db)
+
+	result := db.Create(&page)
+	if result.Error != nil {
+		c.JSON(200, gin.H{
+			"msg":    "Error at creating record",
+			"status": 0,
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"msg":    "Page Created",
+			"status": 1,
+		})
+	}
+
+}

@@ -4,7 +4,7 @@
       <div v-if="page">
         <div class="jumbotron">
           <h3 class="display-4">{{ page.page.Title | capital }}</h3>
-          <p class="lead">{{ page.page.Content | nl2br }}</p>
+          <p class="lead" v-html="page.page.Content"></p>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     page() {
-      return this.$store.state.page;
+      return this.$store.state.page.page;
     },
   },
 };
