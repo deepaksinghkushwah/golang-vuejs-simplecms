@@ -30,8 +30,11 @@
             <li v-if="$store.getters.isAuthenticated == false" class="nav-item">
               <router-link class="nav-link" to="/login">Login</router-link>
             </li>
+            <li v-if="$store.getters.isAuthenticated == false" class="nav-item">
+              <router-link class="nav-link" to="/signup">Signup</router-link>
+            </li>
 
-            <li v-if="$store.getters.isAuthenticated==true" class="nav-item">
+            <li v-if="$store.state.auth.roleID==1" class="nav-item">
                <router-link class="nav-link" to="/page-create">Create Page</router-link>
             </li>
             <li v-if="$store.getters.isAuthenticated==true" class="nav-item">
@@ -53,7 +56,7 @@
 <script>
 // @ is an alias to /src
 import Categories from "@/components/Categories.vue";
-import {AUTH_LOGOUT} from "@/store/actions/auth.js";
+import {AUTH_LOGOUT,PRELOAD} from "@/store/actions/auth.js";
 
 export default {
   name: "Home",
@@ -76,8 +79,9 @@ export default {
     }
   },
   mounted() {   
-    console.log("Authenticated: ",this.$store.getters.isAuthenticated); 
+    this.$store.dispatch(PRELOAD);
     this.$store.dispatch("getCategories");
+    
   },
 };
 </script>

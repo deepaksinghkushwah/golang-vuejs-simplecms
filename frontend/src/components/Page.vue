@@ -1,10 +1,12 @@
 <template>
   <div class="card">
     <div class="card-body">
-      <div v-if="page">
+      <div v-if="page">        
         <div class="jumbotron">
-          <h3 class="display-4">{{ page.page.Title | capital }}</h3>
-          <p class="lead" v-html="page.page.Content"></p>
+          <span class="d-flex justify-content-end align-items-end"><button @click="$router.go(-1)" class="btn btn-sm btn-warning">Back</button></span>
+          <h3 class="display-4">{{ page.page.Title | capital }} </h3>
+          
+          <p class="lead text-justify" v-html="page.page.Content"></p>
         </div>
       </div>
     </div>

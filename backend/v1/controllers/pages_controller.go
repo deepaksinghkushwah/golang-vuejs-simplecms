@@ -32,7 +32,7 @@ func ListAllPages(c *gin.Context) {
 				"error": err,
 			})
 		} else {
-			result := db.Where("cat_id = ?", cat.ID).Find(&pages)
+			result := db.Order("id DESC").Where("cat_id = ?", cat.ID).Find(&pages)
 
 			c.JSON(200, gin.H{
 				"result": result.Value,
@@ -46,7 +46,7 @@ func ListAllPages(c *gin.Context) {
 func GetPage(c *gin.Context) {
 	general.Sleep()
 	alias := c.Param("page")
-	fmt.Println(alias)
+	//fmt.Println(alias)
 	//category := c.Param("category")
 
 	//var cat models.Category
@@ -98,7 +98,7 @@ func CreatePage(c *gin.Context) {
 		fmt.Println(err)
 	}
 
-	fmt.Println("Received data: ", page)
+	//fmt.Println("Received data: ", page)
 	db := general.GetDB()
 	defer general.CloseDB(db)
 

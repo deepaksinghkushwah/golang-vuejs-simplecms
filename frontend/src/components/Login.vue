@@ -52,7 +52,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style>
 .loginFormContainer {
   display: flex;
   align-items: center;
@@ -60,7 +60,7 @@ export default {
 }
 
 .loginFormInner {
-  padding-top: 100px;
+  padding-top: 50px;
   width: 200px;
 }
 </style>

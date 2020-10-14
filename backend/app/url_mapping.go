@@ -19,6 +19,7 @@ func mapUrls() {
 	v1 := router.Group("/v1")
 	{
 		v1.GET("/index", controllers.SiteIndex)
+		v1.POST("/signup", controllers.Signup)
 		v1.GET("/categories", controllers.Categories)
 		v1.GET("/categories/:alias", controllers.GetCategory)
 
