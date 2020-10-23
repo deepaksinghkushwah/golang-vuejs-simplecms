@@ -5,3 +5,4 @@ static/images/*
 .vscode
 mvc-gorm
 *.exe
+backend
